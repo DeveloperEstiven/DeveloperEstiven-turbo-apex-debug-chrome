@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "Salesforce Turbo Debug",
+  "version": "1.0",
+  "description": "Quickly insert System.debug statements in Salesforce Apex code",
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["*://*.salesforce.com/*/apex/debug/ApexCSIPage"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["insert_debug_statement.js"],
+      "matches": ["*://*.salesforce.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16-gray.png",
+      "32": "images/icon-32-gray.png",
+      "48": "images/icon-48-gray.png",
+      "128": "images/icon-128-gray.png"
+    },
+    "default_title": "Click Me"
+  },
+  "permissions": [
+    "declarativeContent",
+    "activeTab",
+    "scripting",
+    "storage",
+    "alarms",
+    "tabs"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      }
+    }
+  }
+}
