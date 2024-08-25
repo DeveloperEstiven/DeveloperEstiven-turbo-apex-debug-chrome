@@ -1,3 +1,9 @@
+let debugPrefix = '✅'; // Default prefix
+
+document.addEventListener('injectDebugPrefix', (event) => {
+  debugPrefix = event.detail.prefix;
+});
+
 function insertDebugStatement() {
   const editor = document.querySelector(".CodeMirror")?.CodeMirror;
 
@@ -11,11 +17,12 @@ function insertDebugStatement() {
       const indentMatch = lineContent.match(/^\s*/);
       let indentation = indentMatch ? indentMatch[0] : "";
 
+      const debugStatement = `${indentation}System.debug('${debugPrefix} ${selectedText}: ' + ${selectedText});`;
+
       if (
         lineContent.trim().startsWith("return") &&
         lineContent.includes(selectedText)
       ) {
-        const debugStatement = `${indentation}System.debug('${selectedText}: ' + ${selectedText});`;
         editor.replaceRange(`${debugStatement}\n`, { line: line, ch: 0 });
       } else {
         if (
@@ -26,7 +33,6 @@ function insertDebugStatement() {
           indentation += "\t";
         }
 
-        const debugStatement = `${indentation}System.debug('${selectedText}: ' + ${selectedText});`;
         editor.replaceRange(`\n${debugStatement}`, {
           line: line,
           ch: lineContent.length,
