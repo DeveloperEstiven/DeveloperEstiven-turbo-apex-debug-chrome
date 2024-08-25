@@ -1,28 +1,51 @@
-let debugPrefix = '✅'; // Default prefix
+class SettingsManager {
+  constructor() {
+    this.settings = {};
+    this.listeners = [];
+    this.loadSettings();
+    this.listenForChanges();
+  }
 
-function injectScript(src, prefix) {
-  const s = document.createElement("script");
-  s.src = chrome.runtime.getURL(src);
-  s.onload = () => {
-    const event = new CustomEvent('injectDebugPrefix', { detail: { prefix } });
-    document.dispatchEvent(event);
-    s.remove();
-  };
-  (document.head || document.documentElement).append(s);
+  async loadSettings() {
+    const result = await chrome.storage.sync.get(['debugPrefix']);
+    this.settings.debugPrefix = result.debugPrefix || '';
+    this.notifyListeners();
+  }
+
+  listenForChanges() {
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+      if (namespace === 'sync') {
+        Object.keys(changes).forEach((key) => {
+          this.settings[key] = changes[key].newValue;
+        });
+        this.notifyListeners();
+      }
+    });
+  }
+
+  onSettingsChange(callback) {
+    this.listeners.push(callback);
+  }
+
+  notifyListeners() {
+    this.listeners.forEach(callback => callback(this.settings));
+  }
 }
 
-// Initial load of the debug prefix
-chrome.storage.sync.get(['debugPrefix'], (result) => {
-  debugPrefix = result.debugPrefix || '✅';
-  injectScript("insert_debug_statement.js", debugPrefix);
-});
-
-// Listen for changes to the debug prefix
-chrome.storage.onChanged.addListener((changes, namespace) => {
-  if (namespace === 'sync' && changes.debugPrefix) {
-    debugPrefix = changes.debugPrefix.newValue || '✅';
-    // Update the prefix in the injected script
-    const event = new CustomEvent('injectDebugPrefix', { detail: { prefix: debugPrefix } });
-    document.dispatchEvent(event);
+class ScriptInjector {
+  static injectScript(src, settings) {
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL(src);
+    script.onload = () => {
+      const event = new CustomEvent('injectSettings', { detail: settings });
+      document.dispatchEvent(event);
+      script.remove();
+    };
+    (document.head || document.documentElement).append(script);
   }
+}
+
+const settingsManager = new SettingsManager();
+settingsManager.onSettingsChange((settings) => {
+  ScriptInjector.injectScript('insert_debug_statement.js', settings);
 });

@@ -10,13 +10,33 @@
       font-family: Arial, sans-serif;
       margin: 20px;
     }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      margin-bottom: 20px;
+      width: 200px;
+    }
+
+    #status {
+      color: green;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
 <body>
   <h1>Salesforce Turbo Debug Options</h1>
+
   <label for="debugPrefix">Debug Prefix:</label>
   <input type="text" id="debugPrefix" placeholder="Enter prefix" />
+
+  <label for="hotkey">Custom Hotkey:</label>
+  <input type="text" id="hotkey" placeholder="e.g., Ctrl+Alt+D" />
+
   <button id="saveButton">Save</button>
   <p id="status"></p>
 

@@ -1,11 +1,11 @@
-let debugPrefix = '✅'; // Default prefix
+let currentSettings = { debugPrefix: '' };
 
-document.addEventListener('injectDebugPrefix', (event) => {
-  debugPrefix = event.detail.prefix;
+document.addEventListener('injectSettings', (event) => {
+  currentSettings = event.detail;
 });
 
 function insertDebugStatement() {
-  const editor = document.querySelector(".CodeMirror")?.CodeMirror;
+  const editor = document.querySelector('.CodeMirror')?.CodeMirror;
 
   if (editor) {
     const selectedText = editor.getSelection();
@@ -15,41 +15,39 @@ function insertDebugStatement() {
       const line = cursor.line;
       const lineContent = editor.getLine(line);
       const indentMatch = lineContent.match(/^\s*/);
-      let indentation = indentMatch ? indentMatch[0] : "";
+      let indentation = indentMatch ? indentMatch[0] : '';
 
-      const debugStatement = `${indentation}System.debug('${debugPrefix} ${selectedText}: ' + ${selectedText});`;
+      const debugStatement = `${indentation}System.debug('${currentSettings.debugPrefix} ${selectedText}: ' + ${selectedText});`;
 
       if (
-        lineContent.trim().startsWith("return") &&
+        lineContent.trim().startsWith('return') &&
         lineContent.includes(selectedText)
       ) {
-        editor.replaceRange(`${debugStatement}\n`, { line: line, ch: 0 });
+        editor.replaceRange(`${debugStatement}\n`, { line, ch: 0 });
       } else {
         if (
           /^\s*(public|private|global|protected|if|for|while|switch|try|catch|else|@|class)/.test(
             lineContent.trim()
           )
         ) {
-          indentation += "\t";
+          indentation += '\t';
         }
 
         editor.replaceRange(`\n${debugStatement}`, {
-          line: line,
+          line,
           ch: lineContent.length,
         });
       }
     } else {
-      console.log("❌ Please select a variable or expression to debug.");
+      console.log('❌ Please select a variable or expression to debug.');
     }
   } else {
-    console.log(
-      "❌ No active editor found. Please open the Salesforce Developer Console."
-    );
+    console.log('❌ No active editor found. Please open the Salesforce Developer Console.');
   }
 }
 
-document.addEventListener("keydown", (event) => {
-  if (event.ctrlKey && event.altKey && event.key === "¬") {
+document.addEventListener('keydown', (event) => {
+  if (event.ctrlKey && event.altKey && event.key === '¬') {
     event.preventDefault();
     insertDebugStatement();
   }
