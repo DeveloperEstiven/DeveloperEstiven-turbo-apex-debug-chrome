@@ -1,0 +1,153 @@
+html {
+  --button-bgc: rgb(249 250 251);
+  --title-size: 18px;
+  --button-hover-text-color: white;
+  --social-icon-size: 24px;
+  --social-icons-gap: 20px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  width: 200px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  color: var(--title-color);
+  font-size: var(--title-size);
+  margin-right: 5px;
+}
+
+.prefix-icon {
+  font-size: 24px;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  text-align: center;
+  height: 80px;
+}
+
+.status {
+  font-size: var(--text-size);
+  color: var(--text-color);
+  margin-top: 10px;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: var(--social-icons-gap);
+  justify-content: center;
+}
+
+.social-icons i {
+  font-size: var(--social-icon-size);
+  padding: 5px;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.social-icons a:hover i {
+  box-shadow: 0 0 8px var(--color-primary);
+}
+
+.group:hover {
+  padding-left: 2.5rem;
+  padding-right: 1.5rem;
+}
+
+.group:hover .group-hover\:h-full {
+  height: 100%;
+}
+
+.group:hover .group-hover\:translate-x-12 {
+  transform: translate(3rem, 0);
+}
+
+.group:hover .group-hover\:text-white {
+  color: var(--button-hover-text-color);
+}
+
+.group:hover .group-hover\:translate-x-0 {
+  transform: translate(0px, 0);
+}
+
+.options-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.options-button__inner {
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 3rem;
+  overflow: hidden;
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: var(--transition);
+  border-radius: 0.25rem;
+  background-color: var(--button-bgc);
+}
+
+.arrows-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  transition: var(--transition);
+  background-color: var(--color-primary);
+}
+
+.arrow-initial {
+  position: absolute;
+  right: 0;
+  padding-right: 1rem;
+  transition: var(--transition);
+}
+
+.arrow-final {
+  transform: translate(-3rem, 0);
+  position: absolute;
+  left: 0;
+  padding-left: 0.625rem;
+  transition: var(--transition);
+}
+
+.svg-arrow__inner {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-secondary);
+}
+
+.button-text {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  transition: var(--transition);
+}
