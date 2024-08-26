@@ -6,15 +6,24 @@
   "content_scripts": [
     {
       "all_frames": true,
-      "matches": ["*://*.salesforce.com/*/apex/debug/ApexCSIPage"],
-      "js": ["content.js"],
-      "run_at": "document_start"
+      "matches": [
+        "*://*.salesforce.com/*/apex/debug/ApexCSIPage"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "type": "module"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["insert_debug_statement.js"],
-      "matches": ["*://*.salesforce.com/*"]
+      "resources": [
+        "insert_debug_statement.js"
+      ],
+      "matches": [
+        "*://*.salesforce.com/*"
+      ]
     }
   ],
   "background": {
@@ -51,5 +60,6 @@
         "mac": "Command+B"
       }
     }
-  }
+  },
+  "options_page": "options.html"
 }

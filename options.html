@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce Turbo Debug Options</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      margin-bottom: 20px;
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #status {
+      color: green;
+      margin-top: 10px;
+    }
+
+    .hotkey-container {
+      margin: 20px 0;
+    }
+
+    .hotkey-input:focus {
+      border-color: #66afe9;
+      box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+
+    .hotkey-input::placeholder {
+      color: #bbb;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Salesforce Turbo Debug Options</h1>
+
+  <label for="debugPrefix">Debug Prefix:</label>
+  <input type="text" id="debugPrefix" placeholder="Enter prefix" />
+
+  <div class="hotkey-container">
+    <label for="hotkey-input">Set Hotkey:</label>
+    <input id="hotkey-input" class="hotkey-input" type="text" readonly placeholder="Press a hotkey..." />
+  </div>
+
+  <button id="saveButton">Save</button>
+  <p id="status"></p>
+
+  <script src="options.js"></script>
+</body>
+
+</html>
