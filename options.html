@@ -18,12 +18,31 @@
 
     input[type="text"] {
       margin-bottom: 20px;
-      width: 200px;
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
     }
 
     #status {
       color: green;
       margin-top: 10px;
+    }
+
+    .hotkey-container {
+      margin: 20px 0;
+    }
+
+    .hotkey-input:focus {
+      border-color: #66afe9;
+      box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+
+    .hotkey-input::placeholder {
+      color: #bbb;
     }
   </style>
 </head>
@@ -34,8 +53,10 @@
   <label for="debugPrefix">Debug Prefix:</label>
   <input type="text" id="debugPrefix" placeholder="Enter prefix" />
 
-  <label for="hotkey">Custom Hotkey:</label>
-  <input type="text" id="hotkey" placeholder="e.g., Ctrl+Alt+D" />
+  <div class="hotkey-container">
+    <label for="hotkey-input">Set Hotkey:</label>
+    <input id="hotkey-input" class="hotkey-input" type="text" readonly placeholder="Press a hotkey..." />
+  </div>
 
   <button id="saveButton">Save</button>
   <p id="status"></p>

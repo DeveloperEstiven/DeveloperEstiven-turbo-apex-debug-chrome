@@ -7,8 +7,9 @@ class SettingsManager {
   }
 
   async loadSettings() {
-    const result = await chrome.storage.sync.get(['debugPrefix']);
-    this.settings.debugPrefix = result.debugPrefix || '';
+    const result = await chrome.storage.sync.get(['debugPrefix', 'hotkey']);
+    this.settings.debugPrefix = result.debugPrefix || '✅';
+    this.settings.hotkey = result.hotkey || 'Ctrl+Alt+¬';
     this.notifyListeners();
   }
 
@@ -28,12 +29,14 @@ class SettingsManager {
   }
 
   notifyListeners() {
-    this.listeners.forEach(callback => callback(this.settings));
+    this.listeners.forEach((callback) => callback(this.settings));
   }
 }
 
 class ScriptInjector {
   static injectScript(src, settings) {
+    this.ejectScript();
+
     const script = document.createElement('script');
     script.src = chrome.runtime.getURL(src);
     script.onload = () => {
@@ -42,6 +45,14 @@ class ScriptInjector {
       script.remove();
     };
     (document.head || document.documentElement).append(script);
+  }
+
+  static ejectScript() {
+    const existingScript = document.querySelector(`script[src="${chrome.runtime.getURL(src)}"]`);
+    if (existingScript) {
+      console.log('🟥  Eject existing script');
+      existingScript.remove();
+    }
   }
 }
 
