@@ -26,12 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (REGEXP.SUPPORTED_URL.test(tabs[0].url)) {
       chrome.storage.sync.get(CHROME_STORAGE.hotkey, (result) => {
         const hotkey = result[CHROME_STORAGE.hotkey] ?? '';
-        status.textContent = 'Extension is active. Select any apex variable and press ';
-
-        const hotkeyHint = document.createElement('b');
-        hotkeyHint.textContent = hotkey;
-
-        status.appendChild(hotkeyHint);
+        if (hotkey) {
+          status.textContent = 'Extension is active. Select any apex variable and press ';
+          const hotkeyHint = document.createElement('b');
+          hotkeyHint.textContent = hotkey;
+          status.appendChild(hotkeyHint);
+        } else {
+          status.textContent = '⚠️ Please click <Preferences> to set up shortcut combination';
+        }
         icon.src = ICON.active;
       });
       return;
